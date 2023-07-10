@@ -26,6 +26,18 @@ namespace FluentModbus
         {
             //
         }
+        
+        /// <summary>
+        /// Creates a Modbus TCP server with support for holding registers (read and write, 16 bit), input registers (read-only, 16 bit), coils (read and write, 1 bit) and discete inputs (read-only, 1 bit).
+        /// <param name="unitIdentifier">A byte specifying station identifier.</param>
+        /// </summary>
+        public ModbusTcpServer(byte unitIdentifier) : this(NullLogger.Instance, true)
+        {
+            if (0 < unitIdentifier && unitIdentifier <= 247)
+                AddUnit(unitIdentifier);
+            else
+                throw new ArgumentException(ErrorMessage.ModbusServer_InvalidUnitIdentifier);
+        }
 
         /// <summary>
         /// Creates a Modbus TCP server with support for holding registers (read and write, 16 bit), input registers (read-only, 16 bit), coils (read and write, 1 bit) and discete inputs (read-only, 1 bit).
